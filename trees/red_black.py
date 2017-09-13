@@ -15,7 +15,7 @@ import bst
 
 def color(node):
     if node is None:
-        return 'black'
+        return 'b'
     else:
         return node.color
 
@@ -65,44 +65,70 @@ class red_black(bst.BST):
 
 
     def rb_balance(self, node):
-
-        while node.parent.color is 'red':
+        '''rebalance the tree iteratively to make the heights of each node balanced'''
+        while node.parent.color is 'r':
             if node.parent is node.parent.parent.left:
                 y = node.parent.parent.right
-                if y.color is 'red':
-                    node.parent.color = 'black'
-                    y.color = 'black'
-                    node.parent.parent.color = 'red'
+                if y.color is 'r':
+                    node.parent.color = 'b'
+                    y.color = 'b'
+                    node.parent.parent.color = 'r'
                     node = node.parent.parent
                 elif node is node.parent.right:
                     node = node.parent
                     left_rotation(self, node)
 
-                    node.parent.color = 'black'
-                    node.parent.parent.color = 'red'
+                    node.parent.color = 'b'
+                    node.parent.parent.color = 'r'
                     right_rotation(self, node.parent.parent)
             else:
                 y = node.parent.parent.left
-                if y.color is 'red':
-                    node.parent.color = 'black'
-                    y.color = 'black'
-                    node.parent.parent.color = 'red'
+                if y.color is 'r':
+                    node.parent.color = 'b'
+                    y.color = 'b'
+                    node.parent.parent.color = 'r'
                     node = node.parent.parent
                 elif node is node.parent.left:
                     node = node.parent
                     right_rotation(self, node)
 
-                    node.parent.color = 'black'
-                    node.parent.parent.color = 'red'
+                    node.parent.color = 'b'
+                    node.parent.parent.color = 'r'
                     left_rotation(self, node.parent.parent)
 
-        self.root.color = 'black'
+        self.root.color = 'b'
 
 
     def insert(self, k):
+        '''Insert a node into the subtrees of the current node
 
+        Args:
+            k: key of the node to be inserted
+
+        Returns:
+            node inserted
+        '''
         node = super(red_black, self).insert(k)
-        node.color = 'red'
+        node.color = 'r'
         self.rb_balance(node)
 
         return node
+
+
+    def delete(self, k):
+        '''Delete a node from the subtrees of the current node
+
+        Args:
+            k: key of the node to be deleted
+
+        Returns:
+            node deleted
+        '''
+        node = super(red_black, self).delete(k)
+        self.rb_balance(node.parent)
+
+        return node
+
+
+
+        

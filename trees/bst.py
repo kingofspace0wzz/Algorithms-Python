@@ -19,12 +19,12 @@ class BSTNode(object):
         self.left = None
         self.right = None
 
-    def __print__(self):
+    def __str__(self):
         '''Print the subtree of the current node'''
         if self is not None:
-            self.left.__print__()
+            self.left.__str__()
             print self.key
-            self.right.__print__()
+            self.right.__str__()
 
     def search(self, k):
         '''Search and return the node with key k from the subtrees of the current node

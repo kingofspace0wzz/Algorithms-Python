@@ -106,5 +106,5 @@ class AVL(bst.BST):
         '''
 
         node = super(AVL, self).delete(k)
-        self.balance(node)
+        self.balance(node.parent)
         return node
